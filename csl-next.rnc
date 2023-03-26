@@ -1,0 +1,79 @@
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+
+start = style | templates
+# Style
+style = element style { info & templates? & citation? & bibliography? }
+# Info
+
+# Info Metadata
+
+## TODO
+info = element info { text }
+# Citation
+citation = element citation { render.model }
+# Bibliography
+bibliography = element bibliography { templates?, render.model }
+# Templates
+templates = element templates { info?, render.model }
+render.model =
+  (render.list | render.item | template.conditional)+, template.atts
+# Template
+template = element template { render.model }
+template.atts =
+  attribute description { text }?,
+  attribute context { text }?,
+  attribute name { text }?,
+  attribute example { text }?
+# Render
+
+## Describes the rendering for an individual reference item.`
+render.item = element render-item { render.atts, render.fmt }
+render.atts =
+  attribute variable { render.vars }
+  | attribute str { text }
+  | attribute term { text }
+  | attribute template { xsd:token }
+render.vars =
+  "author" | "editor" | "issued" | "title" | "cited-locators"
+render.fmt =
+  
+  ## a template to call for partial rendering
+  attribute template { text }?,
+  attribute bold { xsd:boolean }?,
+  attribute prefix { text }?,
+  attribute suffix { text }?,
+  
+  ## an attribute whose value is a list of named token operations that transform
+  ## the input
+  attribute transforms {
+    list { xsd:token }
+  }?,
+  attribute substitute {
+    list { render.vars }
+  }?
+# Render List element
+render.list =
+  element render-list {
+    attribute members {
+      "cite-ref" | "bib-ref" | "contributors" | "cite-ref-locators"
+    },
+    render.model,
+    
+    ## REVIEW Will this work?
+    ## if yes, could probably more flexibility
+    attribute sort { xsd:token }?,
+    attribute group-by { xsd:token }?,
+    
+    ## we could do this with transforms, but don't need to
+    ## and here we generalize this, so can work in different context
+    (attribute shorten-min { xsd:integer },
+     attribute shorten-use { xsd:integer })?,
+    attribute and-as { "symbol" | "term" }?,
+    render.fmt
+  }
+
+## Conditional
+template.conditional =
+  element if { render.model },
+  element if-then { render.model }*,
+  element else { render.model }?

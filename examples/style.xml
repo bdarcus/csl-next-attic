@@ -1,0 +1,41 @@
+<style>
+  <info>test</info>
+  <templates>
+    <template name="apa-authors">
+      <list members="contributors"
+	    shorten-min="3"
+	    shorten-use="1"
+	    and-as="symbol">
+	<render variable="author" transforms="names.initialize"/>
+      </list>
+    </template>
+  </templates>
+  <citation>
+    <!-- configure sort/group in templates -->
+    <if mode="narrative">
+      <list members="cite-ref" delimiter=", "
+	    group-by="author" sort="author">
+	<render template="apa-authors"/> 
+	<list type="item" prefix="(" suffix=")">
+          <render template="date-year"/>
+          <render template="citation-locator"/>
+	</list>
+      </list>
+    </if>
+    <else>
+      <list type="citation" prefix="(" suffix=")" delimiter="; "
+	    group-by="author" sort="author">
+	<list type="item" delimiter=", ">
+          <render template="author-paren"/>
+          <render template="date-year"/>
+          <render template="citation-locator"/>
+	</list>
+      </list>
+    </else>
+  </citation>
+  <bibliography>
+    <list members="bib-ref" sort="author-year" group-by="author-year">
+      
+    </list>
+  </bibliography>
+</style>

@@ -1,0 +1,20 @@
+---
+# Let's start with the simplest example, which isn't that simple.
+citekey1:
+  title: A Book
+  # A string option below.
+  #
+  # This raises a HUGE can-of-worms:
+  #
+  # Can a contributor be an object, a string, OR a list?
+  # Or must we choose only one, which necessarily means a list of objects?
+  # But that's an awfully heavy-weight solution for many cases.
+  #
+  # But let's leave that aside for now.
+  author: Doe, Jane 
+  issued: "2020" # because dates here are (EDTF) strings
+  ## Again: an object, string, or a list of objects, or only the last?
+  publisher: 
+    name: ABC Books
+    location: New York
+

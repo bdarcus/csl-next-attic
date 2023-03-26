@@ -1,0 +1,75 @@
+---
+description: JSON schema for CSL input reference
+"$schema": http://json-schema.org/draft-07/schema#
+"$id": https://resource.citationstyles.org/schema/latest/input/json/csl-reference.json
+definitions:
+  refitem:
+    title: Bibliographic Reference Item
+    type: object
+  edtf-date:
+    title: EDTF date string
+    description: CSL input supports EDTF, levels 0 and 1, plus the non-standard season interval.
+    type: string
+    format: edtf/level-1+season-intervals
+  contributor:
+    title: Contributor
+    description: An agent (person, organization, etc.) that contributes to a reference.
+    type: object
+  author:
+    title: Author
+    "#ref": "#/definitions/contributor"
+  editor:
+    title: Editor
+    "#ref": "#/definitions/contributor"
+  translator:
+    title: Translator
+    "#ref": "#/definitions/contributor"
+  publisher:
+    title: Publisher
+    "#ref": "#/definitions/contributor"
+  title:
+    title: Title
+    type: object
+  issued:
+    title: Issued
+    "#ref": "#/definitions/edtf-date"
+  agent:
+    anyOf:
+    - properties:
+        family:
+          title: Family name of contributor
+          description: Use family, not literal, for personal mononyms, e.g. 'Socrates',
+            'Lady Gaga'
+          type: string
+        given:
+          type: string
+        dropping-particle:
+          # TODO docs
+          type: string
+        non-dropping-particle:
+          # TODO docs
+          type: string
+        suffix:
+          type: string
+        institution:
+          title: Literal name text; should not be parsed
+          description: Use for institutional creator names; e.g. 'National Institutes
+            of Health'
+          type: string
+        institution-short:
+          title: Short form of institution
+          description: Use for short institutional creator names; e.g. 'NIH'
+          type: string
+        alternate:
+          title: Alternative name, such as screen name for online item or real name
+            of pseudonymous author.
+          description: E.g. rendered as 'Smith, J. [@JSmith]'
+          type: string
+        parse-names:
+          # TODO needs documentation
+          type: boolean
+        uncertain:
+          title: Indicates uncertain authorship
+          description: E.g. rendered as '[Smith, J.?]'
+          type: boolean
+      additionalProperties: false

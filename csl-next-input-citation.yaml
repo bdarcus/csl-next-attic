@@ -1,0 +1,236 @@
+# this is the CSL v1.1. branch schema, converted to YAML
+---
+description: JSON schema for CSL citation objects
+"$schema": http://json-schema.org/draft-07/schema#
+"$id": https://resource.citationstyles.org/schema/latest/input/json/csl-citation.json
+type: object
+properties:
+  schema:
+    type: string
+    enum:
+    - https://resource.citationstyles.org/schema/latest/input/json/csl-citation.json
+  version:
+    type: string
+    pattern: "^1.1$"
+  citationID:
+    title: Citation ID
+    description: A stable and unique ID (for example, a UUID) assigned to the citation,
+      for internal use by the processor.
+    type:
+    - string
+    - number
+  noteIndex:
+    title: Note Index
+    description: The end/footnote number (or symbol) in which the citation is located
+      within the document. Citations within the main text of the document have a noteIndex
+      of zero.
+    type:
+    - number
+    - string
+  properties:
+    description: "[Deprecated - Use top-level noteIndex property instead.]"
+    type: object
+    properties:
+      noteIndex:
+        type: number
+    additionalProperties: false
+  additionalProperties: false
+  citationItems:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          description: The id for the cited item a processor will use to access the
+            corresponding item data.
+          type:
+          - string
+          - number
+        itemData:
+          "$ref": csl-data.json#/items
+        prefix:
+          type: string
+        suffix:
+          type: string
+        locators:
+          title: Locator List
+          description: One-or-more specific locations within the cited document.  The
+            array consists of locator objects, which should be mostly self-explanatory,
+            as they should match the item in question. There is also a range object
+            to represent locator ranges.
+          type: array
+          items:
+            anyOf:
+            - "$ref": "#/definitions/locator"
+            - "$ref": "#/definitions/locators-subgroup"
+          examples:
+          - locators:
+            - page: 23
+            - page: 25
+          - locators:
+            - begin:
+                page: 23
+              end:
+                page: 25
+          - locators:
+            - page: 23
+              line: 2
+          - locators:
+            - page: 23
+            - begin:
+                page: 25
+              end:
+                page: 28
+          minItems: 1
+          additionalProperties: false
+      locator:
+        type: string
+        description: "[Deprecated - use the locators object array instead.]"
+      label:
+        type: string
+        description: "[Deprecated - use the locators object array instead.]"
+        enum:
+        - appendix
+        - article
+        - book
+        - canon
+        - chapter
+        - column
+        - elocation
+        - equation
+        - figure
+        - folio
+        - issue
+        - line
+        - note
+        - opus
+        - page
+        - paragraph
+        - part
+        - rule
+        - section
+        - sub verbo
+        - supplement
+        - table
+        - timestamp
+        - title
+        - verse
+        - volume
+      uris:
+        type: array
+        items:
+          type: string
+      command:
+        type: string
+        title: Special citation command
+        descriptions: Specifies a non-default citation format; respectively 'Doe (2019)',
+          '(2019)' and 'Doe'
+        enum:
+        - narrative
+        - suppress-author
+        - author-only
+    required:
+    - id
+    additionalProperties: false
+definitions:
+  locator:
+    anyOf:
+    - type: string
+    - "$ref": "#/definitions/locator-range"
+    - appendix:
+        "$ref": "#/definitions/locator-variable"
+    - article-locator:
+        title: Article
+        description: A section within an often legal document.
+        examples:
+        - U.S. Constitution, Article IV
+        "$ref": "#/definitions/locator-variable"
+    - book:
+        "$ref": "#/definitions/locator-variable"
+    - canon:
+        "$ref": "#/definitions/locator-variable"
+    - chapter:
+        "$ref": "#/definitions/locator-variable"
+    - column:
+        "$ref": "#/definitions/locator-variable"
+    - elocation:
+        title: E-Location
+        description: A location within an electronic document; for example an eBook.
+        "$ref": "#/definitions/locator-variable"
+    - equation:
+        "$ref": "#/definitions/locator-variable"
+    - figure:
+        "$ref": "#/definitions/locator-variable"
+    - folio:
+        "$ref": "#/definitions/locator-variable"
+    - issue:
+        "$ref": "#/definitions/locator-variable"
+    - line:
+        "$ref": "#/definitions/locator-variable"
+    - note:
+        "$ref": "#/definitions/locator-variable"
+    - opus:
+        "$ref": "#/definitions/locator-variable"
+    - page:
+        "$ref": "#/definitions/locator-variable"
+    - paragraph:
+        "$ref": "#/definitions/locator-variable"
+    - part:
+        "$ref": "#/definitions/locator-variable"
+    - rule:
+        "$ref": "#/definitions/locator-variable"
+    - section:
+        "$ref": "#/definitions/locator-variable"
+    - sub-verbo:
+        "$ref": "#/definitions/locator-variable"
+    - supplement:
+        "$ref": "#/definitions/locator-variable"
+    - table:
+        "$ref": "#/definitions/locator-variable"
+    - timestamp:
+        description: An hour, minute, second timestamp for video or audio sources.
+        type: string
+        pattern: "^[0-9]{2}:[0-9]{2}(:[0-9]{2})?$"
+        examples:
+        - '01:12:32'
+    - title-locator:
+        title: Title
+        description: A section within an often legal document.
+        examples:
+        - Civil Rights Act of 1964, Title VII
+        "$ref": "#/definitions/locator-variable"
+    - verse:
+        "$ref": "#/definitions/locator-variable"
+    - volume:
+        "$ref": "#/definitions/locator-variable"
+  locator-variable:
+    title: Locator Variable
+    description: Generally should be an integer or float, but can be a string.
+    type:
+    - string
+    - number
+    examples:
+    - page: 23
+    - page: a-34
+    - page: VII
+  locators-subgroup:
+    title: Locators Subgroup
+    description: Not common, but for a locator sub-group.
+    type: array
+    items:
+      "$ref": "#/definitions/locator"
+    examples:
+    - locators:
+      - page: 259
+        line: 12
+      - - see also
+        - page: 273
+          line: 3
+  locator-range:
+    title: Locator Range
+    type: object
+    properties:
+      begin:
+        "$ref": "#/definitions/locator"
+      end:
+        "$ref": "#/definitions/locator"

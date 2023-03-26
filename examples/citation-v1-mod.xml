@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+  <citation et-al-min="3" et-al-use-first="1" disambiguate-add-year-suffix="true" disambiguate-add-names="true" disambiguate-add-givenname="true" collapse="year" givenname-disambiguation-rule="primary-name-with-initials">
+  <choose>
+    <if mode="in-text">
+      <layout delimiter=", ">
+        <!-- Doe (2005), Smith (2010) have argued ...-->
+        <text macro="author-intext"/>
+        <group prefix="(" suffix=")" delimiter="; ">
+          <group delimiter=", ">
+            <text macro="date-intext"/>
+            <text macro="citation-locator"/>
+          </group>
+        </group>
+      </layout>
+    </if>
+    <else>
+      <layout prefix="(" suffix=")" delimiter="; ">
+        <group delimiter=", ">
+          <text macro="author-paren"/>
+          <text macro="date-intext"/>
+          <text macro="citation-locator"/>
+        </group>
+      </layout>
+    </else>
+  </choose>
+</citation>

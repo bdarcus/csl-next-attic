@@ -1,0 +1,588 @@
+
+# this is the CSL v1.1 branch schema ATM
+---
+title: CSL JSON/YAML
+description: JSON schema for CSL input data
+"$schema": http://json-schema.org/draft-07/schema#
+"$id": https://resource.citationstyles.org/schema/v1.1/input/json/csl-data.json
+type: object
+required:
+- references
+- version
+properties:
+  version:
+    type: number
+    enum:
+    - 1.1
+  title:
+    type: string
+  description:
+    type: string
+  references:
+    type: array
+    items:
+      "$ref": "#/definitions/refitem"
+definitions:
+  title-variable:
+    title: Title variable
+    description: Titles are represented as a string or as an object.
+    anyOf:
+    - "$ref": "#/definitions/rich-text-string"
+    - "$ref": "#/definitions/title-object"
+  title-object:
+    title: Title Object
+    type: object
+    examples:
+    - full: 'Finis Coronat Opus: A Curious Reciprocity; Shelley’s “When the Lamp Is
+        Shattered”'
+      main: Finis Coronat Opus
+      sub:
+      - A Curious Reciprocity
+      - Shelley’s “When the Lamp Is Shattered”
+    - main: Whose Music?
+      sub:
+      - A Sociology of Musical Language
+    - main: Pardon the Interruption
+      sub:
+      - Goal Proximity, Perceived Spare Time, and Impatience
+    - main: England’s Monitor
+      sub:
+      - ", or The History of the Separation"
+    - main: Kriegstagebuch des Oberkommandos der Wehrmacht, 1940–1945
+      short: Kriegstagebuch
+    properties:
+      full:
+        title: Full Title
+        description: The full title string for the item; should generally be redundant,
+          as it's simply the main + the sub titles and/or alternate title.
+        "$ref": "#/definitions/rich-text-string"
+      main:
+        title: Main Title
+        description: The primary title component for the item.
+        "$ref": "#/definitions/rich-text-string"
+      short:
+        title: Short Title
+        description: A short variant title component for the item.
+        "$ref": "#/definitions/rich-text-string"
+      sub:
+        title: Sub-Titles
+        description: The sub-title components for the item, as an array. Typically,
+          when there is a subtitle, there will only be one, but there are cases when
+          there are more.
+        type: array
+        items:
+          "$ref": "#/definitions/rich-text-string"
+  rich-text-string:
+    title: Rich Text String
+    description: A string that may include sub-string formatting for bold, italic,
+      subscript, superscript, math, etc. The accompanying `csl-rich-text.yaml` schema
+      defines experimental support for this in CSL JSON input.
+    type: string
+  edtf-string:
+    title: EDTF date string
+    description: CSL input supports EDTF, levels 0 and 1.
+    type: string
+    format: edtf/level-1+season-intervals
+  date-object-v2:
+    title: Date Object (v2)
+    description: Supports literal only, for now
+    oneOf:
+    - type: object
+      title: Literal Date
+      description: A date that should be passed through to the processor as is; for
+        dates that cannot be represented in EDTF.
+      examples:
+      - literal: Han Dynasty
+      properties:
+        literal:
+          type: string
+      required:
+      - literal
+  date-object-v1:
+    title: Date Object (v1)
+    description: Legacy date format from CSL JSON 1.0.
+    deprecated: true
+    examples:
+    - id: one
+      type: book
+      title: The Title
+      issued:
+        date-parts:
+        - - 2000
+          - 3
+          - 10
+        circa: 'true'
+    type: object
+    properties:
+      date-parts:
+        type: array
+        items:
+          type: array
+          items:
+            type:
+            - string
+            - number
+          minItems: 1
+          maxItems: 3
+        minItems: 1
+        maxItems: 2
+      season:
+        type:
+        - string
+        - number
+      circa:
+        type:
+        - string
+        - number
+        - boolean
+      literal:
+        type: string
+      raw:
+        type: string
+    additionalProperties: false
+  date-variable:
+    title: Date content model
+    description: 'The CSL input model supports three date representations: an EDTF
+      string (preferred), a literal format using `{ "literal": "string" }`, and a
+      legacy format (deprecated).'
+    examples:
+    - id: one
+      type: book
+      title: The Title
+      issued: 2019-07-16?
+    anyOf:
+    - "$ref": "#/definitions/edtf-string"
+    - "$ref": "#/definitions/date-object-v2"
+    - "$ref": "#/definitions/date-object-v1"
+  id-variable:
+    type:
+    - string
+    - number
+  name-variable:
+    anyOf:
+    - properties:
+        family:
+          title: Family name of contributor
+          description: Use family, not literal, for personal mononyms, e.g. 'Socrates',
+            'Lady Gaga'
+          type: string
+        given:
+          type: string
+        dropping-particle:
+          type: string
+        non-dropping-particle:
+          type: string
+        suffix:
+          type: string
+        institution:
+          title: Literal name text; should not be parsed
+          description: Use for institutional creator names; e.g. 'National Institutes
+            of Health'
+          type: string
+        institution-short:
+          title: Short form of institution
+          description: Use for short institutional creator names; e.g. 'NIH'
+          type: string
+        alternate:
+          title: Alternative name, such as screen name for online item or real name
+            of pseudonymous author.
+          description: E.g. rendered as 'Smith, J. [@JSmith]'
+          type: string
+        parse-names:
+          type: boolean
+        uncertain:
+          title: Indicates uncertain authorship
+          description: E.g. rendered as '[Smith, J.?]'
+          type: boolean
+      additionalProperties: false
+  refitem:
+    type: object
+    properties:
+      type:
+        type: string
+        enum:
+        - article
+        - article-journal
+        - article-magazine
+        - article-newspaper
+        - bill
+        - book
+        - broadcast
+        - chapter
+        - classic
+        - collection
+        - dataset
+        - document
+        - entry
+        - entry-dictionary
+        - entry-encyclopedia
+        - event
+        - figure
+        - graphic
+        - hearing
+        - interview
+        - legal_case
+        - legislation
+        - manuscript
+        - map
+        - motion_picture
+        - musical_score
+        - pamphlet
+        - paper-conference
+        - patent
+        - performance
+        - periodical
+        - personal_communication
+        - post
+        - post-weblog
+        - project
+        - regulation
+        - report
+        - review
+        - review-book
+        - software
+        - song
+        - speech
+        - standard
+        - thesis
+        - treaty
+        - webpage
+      id:
+        "$ref": "#/definitions/id-variable"
+      citation-key:
+        type: string
+      categories:
+        type: array
+        items:
+          type: string
+      language:
+        type: string
+      author:
+        type: array
+        items:
+          "$ref": "#/definitions/name-variable"
+      chair:
+        type: array
+        items:
+          "$ref": "#/definitions/name-variable"
+      co-investigator:
+        type: array
+        items:
+          "$ref": "#/definitions/name-variable"
+      collection-editor:
+        type: array
+        items:
+          "$ref": "#/definitions/name-variable"
+      compiler:
+        type: array
+        items:
+          "$ref": "#/definitions/name-variable"
+      composer:
+        type: array
+        items:
+          "$ref": "#/definitions/name-variable"
+      container-author:
+        type: array
+        items:
+          "$ref": "#/definitions/name-variable"
+      container-translator:
+        type: array
+        items:
+          "$ref": "#/definitions/name-variable"
+      contributor:
+        type: array
+        items:
+          "$ref": "#/definitions/name-variable"
+      curator:
+        type: array
+        items:
+          "$ref": "#/definitions/name-variable"
+      director:
+        type: array
+        items:
+          "$ref": "#/definitions/name-variable"
+      editor:
+        type: array
+        items:
+          "$ref": "#/definitions/name-variable"
+      editorial-director:
+        type: array
+        items:
+          "$ref": "#/definitions/name-variable"
+      executive-producer:
+        type: array
+        items:
+          "$ref": "#/definitions/name-variable"
+      guest:
+        type: array
+        items:
+          "$ref": "#/definitions/name-variable"
+      host:
+        type: array
+        items:
+          "$ref": "#/definitions/name-variable"
+      interviewer:
+        type: array
+        items:
+          "$ref": "#/definitions/name-variable"
+      illustrator:
+        type: array
+        items:
+          "$ref": "#/definitions/name-variable"
+      narrator:
+        type: array
+        items:
+          "$ref": "#/definitions/name-variable"
+      organizer:
+        type: array
+        items:
+          "$ref": "#/definitions/name-variable"
+      original-author:
+        description: "[Deprecated - Use `original` related `author` property instead]"
+        type: array
+        items:
+          "$ref": "#/definitions/name-variable"
+      performer:
+        type: array
+        items:
+          "$ref": "#/definitions/name-variable"
+      principal-investigator:
+        type: array
+        items:
+          "$ref": "#/definitions/name-variable"
+      producer:
+        type: array
+        items:
+          "$ref": "#/definitions/name-variable"
+      recipient:
+        type: array
+        items:
+          "$ref": "#/definitions/name-variable"
+      reviewed-author:
+        description: "[Deprecated - Use `reviewed` related `author` property instead]"
+        type: array
+        items:
+          "$ref": "#/definitions/name-variable"
+      script-writer:
+        type: array
+        items:
+          "$ref": "#/definitions/name-variable"
+      series-creator:
+        type: array
+        items:
+          "$ref": "#/definitions/name-variable"
+      translator:
+        type: array
+        items:
+          "$ref": "#/definitions/name-variable"
+      volume-editor:
+        type: array
+        items:
+          "$ref": "#/definitions/name-variable"
+      volume-translator:
+        type: array
+        items:
+          "$ref": "#/definitions/name-variable"
+      accessed:
+        "$ref": "#/definitions/date-variable"
+      available-date:
+        "$ref": "#/definitions/date-variable"
+      event-date:
+        "$ref": "#/definitions/date-variable"
+      issued:
+        "$ref": "#/definitions/date-variable"
+      original-date:
+        description: "[Deprecated - Use `original` related date property instead]"
+        "$ref": "#/definitions/date-variable"
+      submitted:
+        "$ref": "#/definitions/date-variable"
+      abstract:
+        type: string
+      annote:
+        type: string
+      archive:
+        type: string
+      archive_collection:
+        type: string
+      archive_location:
+        type: string
+      archive-place:
+        type: string
+      authority:
+        type: string
+      call-number:
+        type: string
+      chapter-number:
+        type:
+        - string
+        - number
+      citation-number:
+        type:
+        - string
+        - number
+      citation-label:
+        type: string
+      collection-number:
+        type:
+        - string
+        - number
+      collection-title:
+        "$ref": "#/definitions/title-variable"
+      collection-title-short:
+        description: "[Deprecated - use `collection-title` with a `short` key"
+        type: string
+      container-title:
+        "$ref": "#/definitions/title-variable"
+      container-title-short:
+        description: "[Deprecated - use `container-title` with a `short` key"
+        type: string
+      dimensions:
+        type: string
+      division:
+        type: string
+      DOI:
+        type: string
+      edition:
+        type:
+        - string
+        - number
+      event:
+        description: "[Deprecated - use 'event-title' instead. Will be removed in
+          1.1]"
+        type: string
+      event-title:
+        type: string
+      event-place:
+        type: string
+      first-reference-note-number:
+        type:
+        - string
+        - number
+      genre:
+        type: string
+      ISBN:
+        type: string
+      ISSN:
+        type: string
+      issue:
+        type:
+        - string
+        - number
+      jurisdiction:
+        type: string
+      keyword:
+        type: string
+      locator:
+        type:
+        - string
+        - number
+      medium:
+        type: string
+      note:
+        type: string
+      number:
+        type:
+        - string
+        - number
+      number-of-pages:
+        type:
+        - string
+        - number
+      number-of-volumes:
+        type:
+        - string
+        - number
+      original:
+        title: Original Related Item
+        "$ref": "#/definitions/refitem"
+      original-publisher:
+        description: "[Deprecated - Use `original` related `publisher` property instead]"
+        type: string
+      original-publisher-place:
+        description: "[Deprecated - Use `original` related `publisher-place` property
+          instead]"
+        type: string
+      original-title:
+        description: "[Deprecated - Use `original` related `title` property instead]"
+        "$ref": "#/definitions/title-variable"
+      page:
+        type:
+        - string
+        - number
+      page-first:
+        type:
+        - string
+        - number
+      part:
+        type:
+        - string
+        - number
+      part-title:
+        type: string
+      PMCID:
+        type: string
+      PMID:
+        type: string
+      printing:
+        type:
+        - string
+        - number
+      publisher:
+        type: string
+      publisher-place:
+        type: string
+      references:
+        type: string
+      reviewed:
+        title: Reviewed Related Item
+        "$ref": "#/definitions/refitem"
+      reviewed-genre:
+        description: "[Deprecated - Use `reviewed` related `genre` property instead]"
+        type: string
+      reviewed-title:
+        description: "[Deprecated - Use `reviewed` related `title` property instead]"
+        type: string
+      scale:
+        type: string
+      section:
+        type: string
+      source:
+        type: string
+      status:
+        type: string
+      supplement:
+        type:
+        - string
+        - number
+      title:
+        "$ref": "#/definitions/title-variable"
+      title-short:
+        description: "[Deprecated - use `title` with a `short` key"
+        type: string
+      URL:
+        type: string
+      version:
+        type: string
+      volume:
+        type:
+        - string
+        - number
+      volume-title:
+        type: string
+      year-suffix:
+        type: string
+      custom:
+        title: Custom key-value pairs.
+        type: object
+        description: Used to store additional information that does not have a designated
+          CSL JSON field. The custom field is preferred over the note field for storing
+          custom data, particularly for storing key-value pairs, as the note field
+          is used for user annotations in annotated bibliography styles.
+        examples:
+        - short_id: xyz
+          other-ids:
+          - alternative-id
+        - metadata-double-checked: true
+    required:
+    - type
+    additionalProperties: false

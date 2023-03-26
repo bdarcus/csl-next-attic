@@ -1,0 +1,24 @@
+---
+# this was just an initial experiment, that may go nowhere
+title: APA
+id: apa
+disambiguation: abc
+citation:
+  mode: intext
+  et-al-min: 4
+  et-al-use-first: 1
+  disambiguate-add-year-suffix: true
+  disambiguate-add-names: true
+  disambiguate-add-givenname: true
+  givenname-disambiguation-rule: primary-name
+  collapse: year
+  after-collapse-delimiter: "; "
+  templates:
+    - mode: default
+    # this template syntax (liquid) may not be enough, for example
+    # or much better than just sticking exclusively with XML
+      str: "({{ author.names }}, {{ date }}{{ year-suffix }})"
+    - mode: intext
+      str: "{{ author.names }} ({{ date }}{{year-suffix }})"
+
+

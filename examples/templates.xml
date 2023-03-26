@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <info>CSL NEXT templates.</info>
+  <template name="apa-sort">
+    <list members="contributors" transforms="csl.shorten:1,3 csl.etal" />
+  <template name="citation-apa-paren"
+            description="For default rendering of parenthetical APA citations."
+            example="(Doe, 2020:23; Smith, 2021)">
+    <list items="cite-ref"
+          prefix="("
+          suffix=")"
+          delimiter="; ">
+      <render variable="author" suffix=" "
+              substitute="editor"
+              transforms="names"/>
+      <render variable="issued" transforms="fmt-date-apa"/>
+      <render variable="cited-locators"
+              prefix=": "
+              transforms="fmt-locators-apa"/>
+    </list>
+  </template>
+  <template name="citation-apa-intext"
+            description="For rendering of intext APA citations."
+            example="Doe (2020:23; Smith, 2021)">
+    <render variable="author" suffix=" "
+            substitute="editor"
+            transforms="names"/>
+    <list items="cite-ref"
+          prefix="("
+          suffix=")"
+          delimiter="; ">
+      <render variable="issued" transforms="fmt-date-apa"/>
+      <!-- unclear transforms vs other templates -->
+      <render variable="cited-locators"
+              prefix=": "
+              transforms="fmt-locators-apa"/>
+    </list>
+  </template>
+</templates>

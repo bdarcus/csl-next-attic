@@ -1,0 +1,31 @@
+<!-- 
+combine layout and group into list.
+-->
+<citation>
+  <!-- remove attribute parameters above, and place where they belong -->
+  <list type="citation" delimiter=", "
+	sort-template="apa-author-year"
+	group-template="apa-author-year">
+    <!-- 
+         sort and group lists with templates (or transforms?) 
+         not sure this would work as is, particularly grouping, but worth considering
+    -->
+    <if mode="in-text">
+      <text template="author-intext"/>
+      <!-- author list shortening would use transforms on that template list-->
+      <list type="item" prefix="(" suffix=")">
+        <text template="date-intext"/>
+        <text template="citation-locator"/>
+      </list>
+    </if>
+    <else>
+      <list type="citation" prefix="(" suffix=")" delimiter="; ">
+        <list type="item" delimiter=", ">
+          <text template="author-paren"/>
+          <text template="date-intext"/>
+          <text template="citation-locator"/>
+        </list>
+      </list>
+    </else>
+  </list>
+</citation>
