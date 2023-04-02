@@ -14,7 +14,11 @@ citation = element citation { render.model }
 # Bibliography
 bibliography = element bibliography { templates?, render.model }
 # Templates
-templates = element templates { info?, render.model }
+templates =
+  element templates {
+    info?,
+    element template { render.model }+
+  }
 render.model =
   (render.list | render.item | template.conditional)+, template.atts
 # Template
@@ -54,15 +58,17 @@ render.fmt =
 # Render List element
 render.list =
   element render-list {
-    attribute members {
-      "cite-ref" | "bib-ref" | "contributors" | "cite-ref-locators"
-    },
     render.model,
     
     ## REVIEW Will this work?
     ## if yes, could probably more flexibility
     attribute sort { xsd:token }?,
-    attribute group-by { xsd:token }?,
+    
+    ## a list of variables (or templates?) to group by; a common value might be,
+    ## for example, "author date.year"
+    attribute group-by {
+      list { xsd:token }
+    }?,
     
     ## we could do this with transforms, but don't need to
     ## and here we generalize this, so can work in different context
