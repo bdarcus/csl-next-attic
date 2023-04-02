@@ -133,12 +133,15 @@ The following example fragment shows:
 - `cs:transforms` attribute
 
 ```xml
-    <template name="apa-authors">
-      <list members="contributors"
-            shorten-min="3"
-            shorten-use="1"
-            and-as="symbol">
-         <render variable="author" transforms="names.initialize"/>
-      </list>
-    </template>
+    <!-- configure sort/group in templates -->
+    <if mode="narrative">
+      <render-list delimiter=", "
+                   group-by="author" sort="author">
+	      <render-item template="apa-authors"/>
+	      <render-list prefix="(" suffix=")">
+          <render template="date-year"/>
+          <render template="citation-locator"/>
+	    </render-list>
+      </render-list>
+    </if>
 ```

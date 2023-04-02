@@ -2,40 +2,39 @@
   <info>test</info>
   <templates>
     <template name="apa-authors">
-      <list members="contributors"
-	    shorten-min="3"
-	    shorten-use="1"
-	    and-as="symbol">
-	<render variable="author" transforms="names.initialize"/>
-      </list>
+      <render-list shorten-min="3"
+	                 shorten-use="1"
+	                 and-as="symbol">
+	      <render-item variable="author"
+                     transforms="names.initialize"/>
+      </render-list>
     </template>
   </templates>
   <citation>
     <!-- configure sort/group in templates -->
     <if mode="narrative">
-      <list members="cite-ref" delimiter=", "
-	    group-by="author" sort="author">
-	<render template="apa-authors"/> 
-	<list type="item" prefix="(" suffix=")">
+      <render-list delimiter=", "
+	                 group-by="author date.year" sort="author">
+	      <render-item template="apa-authors"/>
+	      <render-list prefix="(" suffix=")">
           <render template="date-year"/>
           <render template="citation-locator"/>
-	</list>
-      </list>
+	      </render-list>
+      </render-list>
     </if>
     <else>
-      <list type="citation" prefix="(" suffix=")" delimiter="; "
-	    group-by="author" sort="author">
-	<list type="item" delimiter=", ">
-          <render template="author-paren"/>
-          <render template="date-year"/>
-          <render template="citation-locator"/>
-	</list>
-      </list>
+      <!-- parenthetical author-date citation -->
+      <render-list group-by="author date.year"
+                   prefix="(" suffix=")" separator="; ">
+        <render-item template="author-paren" suffix=", "/>
+        <render-item variable="issued" transform="date.year"/>
+        <render-item variable="issued" transform="date.year.suffix"/>
+      </render-list>
     </else>
   </citation>
   <bibliography>
-    <list members="bib-ref" sort="author-year" group-by="author-year">
-      
-    </list>
+    <render-list sort="author-year" group-by="author-year">
+      <render-item term="todo"/>
+    </render-list>
   </bibliography>
 </style>
