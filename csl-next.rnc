@@ -56,6 +56,16 @@ render.fmt =
   attribute substitute {
     list { render.vars }
   }?
+
+## sort and group values; the included options here provide flexibility on how grouping
+## happens in different context.
+## TODO this in general needs more thought
+sort-group.vals =
+  "cs:author" | "cs:year" | "cs:author-year" | custom.att.val.pattern
+
+## Allows custom pseudo namespace-prefixed attribute values.
+custom.att.val.pattern =
+  (xsd:NMTOKEN - (xsd:NMTOKEN { pattern = "cs:.*" }))
 # Render List element
 render.list =
   element list {
@@ -63,11 +73,11 @@ render.list =
     
     ## REVIEW Will this work?
     ## if yes, could probably more flexibility
-    attribute sort { csl.token }?,
+    attribute sort { sort-group.vals }?,
     
     ## a list of variables (or templates?) to group by; a common value might be,
     ## for example, "author date.year"
-    attribute group-by { csl.token.list }?,
+    attribute group-by { sort-group.vals }?,
     
     ## we could do this with transforms, but don't need to
     ## and here we generalize this, so can work in different context

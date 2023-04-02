@@ -14,8 +14,8 @@
     <!-- configure sort/group in templates -->
     <if mode="narrative">
       <list delimiter=", "
-	          group-by="author"
-            sort="author">
+	          group-by="cs:author"
+            sort="cs:author">
 	      <reference template="apa-authors"/>
 	      <list prefix="(" suffix=")">
           <reference template="date-year"/>
@@ -25,7 +25,7 @@
     </if>
     <else>
       <!-- parenthetical author-date citation -->
-      <list group-by="author date.year"
+      <list group-by="cs:author-year"
             prefix="(" suffix=")"
             delimiter="; ">
         <reference template="author-paren" suffix=", "/>
@@ -35,8 +35,8 @@
     </else>
   </citation>
   <bibliography>
-    <list sort="author-year"
-          group-by="author-year">
+    <list sort="cs:author-year"
+          group-by="cs:author-year">
       <reference term="todo"/>
     </list>
   </bibliography>
