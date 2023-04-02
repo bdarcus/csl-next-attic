@@ -2,39 +2,42 @@
   <info>test</info>
   <templates>
     <template name="apa-authors">
-      <render-list shorten-min="3"
-	                 shorten-use="1"
-	                 and-as="symbol">
-	      <render-item variable="author"
-                     transforms="names.initialize"/>
-      </render-list>
+      <list shorten-min="3"
+	          shorten-use="1"
+	          and-as="symbol">
+	      <reference variable="author"
+                   transforms="names.initialize"/>
+      </list>
     </template>
   </templates>
   <citation>
     <!-- configure sort/group in templates -->
     <if mode="narrative">
-      <render-list delimiter=", "
-	                 group-by="author date.year" sort="author">
-	      <render-item template="apa-authors"/>
-	      <render-list prefix="(" suffix=")">
-          <render template="date-year"/>
-          <render template="citation-locator"/>
-	      </render-list>
-      </render-list>
+      <list delimiter=", "
+	          group-by="author"
+            sort="author">
+	      <reference template="apa-authors"/>
+	      <list prefix="(" suffix=")">
+          <reference template="date-year"/>
+          <reference template="citation-locator"/>
+	      </list>
+      </list>
     </if>
     <else>
       <!-- parenthetical author-date citation -->
-      <render-list group-by="author date.year"
-                   prefix="(" suffix=")" separator="; ">
-        <render-item template="author-paren" suffix=", "/>
-        <render-item variable="issued" transform="date.year"/>
-        <render-item variable="issued" transform="date.year.suffix"/>
-      </render-list>
+      <list group-by="author date.year"
+            prefix="(" suffix=")"
+            delimiter="; ">
+        <reference template="author-paren" suffix=", "/>
+        <reference variable="issued" transforms="date.year"/>
+        <reference variable="issued" transforms="date.year.suffix"/>
+      </list>
     </else>
   </citation>
   <bibliography>
-    <render-list sort="author-year" group-by="author-year">
-      <render-item term="todo"/>
-    </render-list>
+    <list sort="author-year"
+          group-by="author-year">
+      <reference term="todo"/>
+    </list>
   </bibliography>
 </style>

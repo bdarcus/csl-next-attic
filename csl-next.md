@@ -66,9 +66,11 @@ Templates may include one-or-more of the following two rendering elements:
 A `list` describes how to format a delimited list of strings to final output string.
 When a `list` is empty, it does not render.
 
-#### Text
+A `list` may include optional `group-by` or `sort` attributes, which configure grouping and sorting respectively.
 
-A `text` element places a variable or template string output in a sequence, and formats it with surrounding punctuation, fonts, etc.
+#### Reference
+
+A `reference` element places a variable or template string output in a sequence, and formats it with surrounding punctuation, fonts, etc.
 
 ### Rendering Attributes
 
@@ -137,11 +139,11 @@ The following example fragment shows:
     <if mode="narrative">
       <render-list delimiter=", "
                    group-by="author" sort="author">
-	      <render-item template="apa-authors"/>
-	      <render-list prefix="(" suffix=")">
-          <render template="date-year"/>
-          <render template="citation-locator"/>
-	    </render-list>
-      </render-list>
+        <render-item template="apa-authors"/>
+      <render-list prefix="(" suffix=")">
+        <render template="date-year"/>
+        <render template="citation-locator"/>
+       </render-list>
+    </render-list>
     </if>
 ```

@@ -9,6 +9,9 @@ style = element style { info & templates? & citation? & bibliography? }
 
 ## TODO
 info = element info { text }
+# data-types
+csl.token = xsd:NMTOKEN
+csl.token.list = xsd:NMTOKENS
 # Citation
 citation = element citation { render.model }
 # Bibliography
@@ -31,12 +34,12 @@ template.atts =
 # Render
 
 ## Describes the rendering for an individual reference item.`
-render.item = element render-item { render.atts, render.fmt }
+render.item = element reference { render.atts, render.fmt }
 render.atts =
   attribute variable { render.vars }
   | attribute str { text }
   | attribute term { text }
-  | attribute template { xsd:token }
+  | attribute template { csl.token }
 render.vars =
   "author" | "editor" | "issued" | "title" | "cited-locators"
 render.fmt =
@@ -47,39 +50,38 @@ render.fmt =
   attribute prefix { text }?,
   attribute suffix { text }?,
   
-  ## an attribute whose value is a list of named token operations that transform
+  ## an attribute whose value is a list of named csl.token operations that transform
   ## the input
-  attribute transforms {
-    list { xsd:token }
-  }?,
+  attribute transforms { csl.token.list }?,
   attribute substitute {
     list { render.vars }
   }?
 # Render List element
 render.list =
-  element render-list {
+  element list {
     render.model,
     
     ## REVIEW Will this work?
     ## if yes, could probably more flexibility
-    attribute sort { xsd:token }?,
+    attribute sort { csl.token }?,
     
     ## a list of variables (or templates?) to group by; a common value might be,
     ## for example, "author date.year"
-    attribute group-by {
-      list { xsd:token }
-    }?,
+    attribute group-by { csl.token.list }?,
     
     ## we could do this with transforms, but don't need to
     ## and here we generalize this, so can work in different context
     (attribute shorten-min { xsd:integer },
      attribute shorten-use { xsd:integer })?,
     attribute and-as { "symbol" | "term" }?,
-    render.fmt
+    render.fmt,
+    attribute delimiter { text }?
   }
 
 ## Conditional
 template.conditional =
-  element if { render.model },
-  element if-then { render.model }*,
+  element if { condition, render.model },
+  element if-then { condition, render.model }*,
   element else { render.model }?
+# TODO
+condition = attribute mode { "narrative" | "default" }
