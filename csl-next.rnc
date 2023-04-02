@@ -77,6 +77,8 @@ render.list =
     
     ## a list of variables (or templates?) to group by; a common value might be,
     ## for example, "author date.year"
+    ## REVIEW should this be a token list?
+    ## group-by="cs:author cs:year"?
     attribute group-by { sort-group.vals }?,
     
     ## we could do this with transforms, but don't need to
