@@ -83,68 +83,17 @@ definitions:
     description: CSL input supports EDTF, levels 0 and 1.
     type: string
     format: edtf/level-1+season-intervals
-  date-object-v2:
-    title: Date Object (v2)
-    description: Supports literal only, for now
-    oneOf:
-    - type: object
-      title: Literal Date
-      description: A date that should be passed through to the processor as is; for
-        dates that cannot be represented in EDTF.
-      examples:
-      - literal: Han Dynasty
-      properties:
-        literal:
-          type: string
-      required:
-      - literal
-  date-object-v1:
-    title: Date Object (v1)
-    description: Legacy date format from CSL JSON 1.0.
-    deprecated: true
+  date-literal:
+    title: Literal Date
+    description: A date that should be passed through to the processor as is; for
+      dates that cannot be represented in EDTF.
+    type: string
     examples:
-    - id: one
-      type: book
-      title: The Title
-      issued:
-        date-parts:
-        - - 2000
-          - 3
-          - 10
-        circa: 'true'
-    type: object
-    properties:
-      date-parts:
-        type: array
-        items:
-          type: array
-          items:
-            type:
-            - string
-            - number
-          minItems: 1
-          maxItems: 3
-        minItems: 1
-        maxItems: 2
-      season:
-        type:
-        - string
-        - number
-      circa:
-        type:
-        - string
-        - number
-        - boolean
-      literal:
-        type: string
-      raw:
-        type: string
-    additionalProperties: false
+      - Han Dynasty
   date-variable:
     title: Date content model
-    description: 'The CSL input model supports three date representations: an EDTF
-      string (preferred), a literal format using `{ "literal": "string" }`, and a
-      legacy format (deprecated).'
+    description: CSL NEXT dates are parsed as EDTF, or passed through as it.
+    # REVIEW will this work?
     examples:
     - id: one
       type: book
@@ -152,8 +101,7 @@ definitions:
       issued: 2019-07-16?
     anyOf:
     - "$ref": "#/definitions/edtf-string"
-    - "$ref": "#/definitions/date-object-v2"
-    - "$ref": "#/definitions/date-object-v1"
+    - "$ref": "#/definitions/date-literal"
   id-variable:
     type:
     - string
