@@ -82,7 +82,13 @@ definitions:
     title: EDTF date string
     description: CSL input supports EDTF, levels 0 and 1.
     type: string
+    # https://github.com/retorquere/json-schema-edtf
     format: edtf/level-1+season-intervals
+    examples:
+      - id: one
+        type: book
+        title: The Title
+        issued: 2019-07-16?
   date-literal:
     title: Literal Date
     description: A date that should be passed through to the processor as is; for
@@ -92,13 +98,8 @@ definitions:
       - Han Dynasty
   date-variable:
     title: Date content model
-    description: CSL NEXT dates are parsed as EDTF, or passed through as it.
+    description: Dates are parsed as EDTF, or passed through as is.
     # REVIEW will this work?
-    examples:
-    - id: one
-      type: book
-      title: The Title
-      issued: 2019-07-16?
     anyOf:
     - "$ref": "#/definitions/edtf-string"
     - "$ref": "#/definitions/date-literal"
