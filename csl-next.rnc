@@ -75,28 +75,28 @@ custom.att.val.pattern =
   (xsd:NMTOKEN - (xsd:NMTOKEN { pattern = "cs:.*" }))
 # Render List element
 render.list =
-  element list {
+  element cs:list {
     render.model,
     
     ## REVIEW Will this work?
     ## if yes, could probably more flexibility
-    attribute sort { sort-group.vals }?,
+    attribute cs:sort { sort-group.vals }?,
     
     ## a list of variables (or templates?) to group by; a common value might be,
     ## for example, "author date.year"
     ## REVIEW should this be a token list?
     ## group-by="cs:author cs:year"?
-    attribute group-by {
+    attribute cs:group-by {
       list { sort-group.vals }
     }?,
     
     ## we could do this with transforms, but don't need to
     ## and here we generalize this, so can work in different context
-    (attribute shorten-min { xsd:integer },
-     attribute shorten-use { xsd:integer })?,
-    attribute and-as { "symbol" | "term" }?,
+    (attribute cs:shorten-min { xsd:integer },
+     attribute cs:shorten-use { xsd:integer })?,
+    attribute cs:and-as { "symbol" | "term" }?,
     render.fmt,
-    attribute delimiter { text }?
+    attribute cs:delimiter { text }?
   }
 
 ## Conditional
