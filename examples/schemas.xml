@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<locatingRules xmlns="http://thaiopensource.com/ns/locating-rules/1.0">
+
+  <uri pattern="*.csl" typeId="CSL1"/>
+  <namespace ns="http://purl.org/net/xbiblio/csl" typeId="CSL1"/>
+  <typeId id="CSL1" uri="~/Code/csl/schemas/schemas/csl.rnc"/>
+
+  <namespace ns="http://purl.org/net/xbiblio/csl/2" typeId="CSLN"/>
+  <typeId id="CSLN" uri="../csl-next.rnc"/>
+
+</locatingRules>
