@@ -109,6 +109,15 @@ definitions:
     - string
     - number
   name-variable:
+    # REVIEW
+    # 1. call this 'contributor'?
+    # 2. can we find a way to allow a more compact option? The modeling here is
+    #    necessarily complex to cover the complex cases (lists of personal names),
+    #    but awfully verbose for the simple case (org names, single contributes, etc).
+    #
+    #    Maybe allow a string, with some way to distinguish:
+    #      - Doe, J; Smith, S
+    #      - Some Org, Sub-Unit; Jones, K
     anyOf:
     - properties:
         family:
