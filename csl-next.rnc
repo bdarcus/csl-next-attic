@@ -70,9 +70,12 @@ render.fmt =
 sort-group.vals =
   "cs:author" | "cs:year" | "cs:author-year" | custom.att.val.pattern
 
+## Allows foreign-namespaced attributes.
+# REVIEW does this allow non-spaced attributes?
+custom.atts = attribute * - cs:* { text }
 ## Allows custom pseudo namespace-prefixed attribute values.
 custom.att.val.pattern =
-  (xsd:NMTOKEN - (xsd:NMTOKEN { pattern = "cs:.*" }))
+  (xsd:NMTOKEN - (xsd:NMTOKEN { pattern = "^cs-.*" }))
 # Render List element
 render.list =
   element cs:list {
