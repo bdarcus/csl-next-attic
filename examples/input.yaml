@@ -17,4 +17,14 @@ citekey1:
   publisher: 
     name: ABC Books
     location: New York
-
+citekey2:
+  author: Jones, Sam
+  issued: "2020"
+  title: A chapter title
+  container:
+    type: book
+    editor: Doe, J; Smith, M
+    issued: "2020"
+    publisher:
+      name: ABC Press
+      place: New York

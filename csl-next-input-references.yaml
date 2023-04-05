@@ -105,6 +105,7 @@ definitions:
     - "$ref": "#/definitions/edtf-string"
     - "$ref": "#/definitions/date-literal"
   id-variable:
+    # FIX bug?
     type:
     - string
     - number
@@ -112,8 +113,9 @@ definitions:
     # REVIEW
     # 1. call this 'contributor'?
     # 2. can we find a way to allow a more compact option? The modeling here is
-    #    necessarily complex to cover the complex cases (lists of personal names),
-    #    but awfully verbose for the simple case (org names, single contributes, etc).
+    #    necessarily complex to cover the complex, and common, cases (lists of
+    #    personal names), but awfully verbose for the simple case (org names,
+    #    single contributes, etc).
     #
     #    Maybe allow a string, with some way to distinguish:
     #      - Doe, J; Smith, S
@@ -154,6 +156,7 @@ definitions:
           type: boolean
       additionalProperties: false
   refitem:
+    # TODO metadata on all of the below.
     type: object
     properties:
       type:
@@ -385,6 +388,8 @@ definitions:
         - string
         - number
       collection-title:
+        # REVIEW these could just as well be handled with 'related'
+        #   bite the bullet now?
         "$ref": "#/definitions/title-variable"
       container-title:
         "$ref": "#/definitions/title-variable"
@@ -473,6 +478,7 @@ definitions:
         type: string
       reviewed:
         title: Reviewed Related Item
+        # TODO define, and use, a relatedref type
         "$ref": "#/definitions/refitem"
       scale:
         type: string
@@ -499,6 +505,7 @@ definitions:
       volume-title:
         type: string
       year-suffix:
+        # REVIEW remove
         type: string
       custom:
         title: Custom key-value pairs.
