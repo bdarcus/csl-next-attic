@@ -112,8 +112,7 @@ definitions:
     - properties:
         family:
           title: Family name of contributor
-          description: Use family, not literal, for personal mononyms, e.g. 'Socrates',
-            'Lady Gaga'
+          description: Use family, not literal, for personal mononyms, e.g. 'Socrates', 'Lady Gaga'
           type: string
         given:
           type: string
@@ -125,8 +124,7 @@ definitions:
           type: string
         institution:
           title: Literal name text; should not be parsed
-          description: Use for institutional creator names; e.g. 'National Institutes
-            of Health'
+          description: Use for institutional creator names; e.g. 'National Institutes of Health'
           type: string
         institution-short:
           title: Short form of institution
@@ -138,6 +136,7 @@ definitions:
           description: E.g. rendered as 'Smith, J. [@JSmith]'
           type: string
         parse-names:
+          # REVIEW do we need this?
           type: boolean
         uncertain:
           title: Indicates uncertain authorship
@@ -377,14 +376,8 @@ definitions:
         - number
       collection-title:
         "$ref": "#/definitions/title-variable"
-      collection-title-short:
-        description: "[Deprecated - use `collection-title` with a `short` key"
-        type: string
       container-title:
         "$ref": "#/definitions/title-variable"
-      container-title-short:
-        description: "[Deprecated - use `container-title` with a `short` key"
-        type: string
       dimensions:
         type: string
       division:
@@ -395,10 +388,6 @@ definitions:
         type:
         - string
         - number
-      event:
-        description: "[Deprecated - use 'event-title' instead. Will be removed in
-          1.1]"
-        type: string
       event-title:
         type: string
       event-place:
@@ -444,16 +433,6 @@ definitions:
       original:
         title: Original Related Item
         "$ref": "#/definitions/refitem"
-      original-publisher:
-        description: "[Deprecated - Use `original` related `publisher` property instead]"
-        type: string
-      original-publisher-place:
-        description: "[Deprecated - Use `original` related `publisher-place` property
-          instead]"
-        type: string
-      original-title:
-        description: "[Deprecated - Use `original` related `title` property instead]"
-        "$ref": "#/definitions/title-variable"
       page:
         type:
         - string
@@ -485,12 +464,6 @@ definitions:
       reviewed:
         title: Reviewed Related Item
         "$ref": "#/definitions/refitem"
-      reviewed-genre:
-        description: "[Deprecated - Use `reviewed` related `genre` property instead]"
-        type: string
-      reviewed-title:
-        description: "[Deprecated - Use `reviewed` related `title` property instead]"
-        type: string
       scale:
         type: string
       section:
@@ -505,9 +478,6 @@ definitions:
         - number
       title:
         "$ref": "#/definitions/title-variable"
-      title-short:
-        description: "[Deprecated - use `title` with a `short` key"
-        type: string
       URL:
         type: string
       version:
