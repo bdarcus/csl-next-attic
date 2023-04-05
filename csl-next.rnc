@@ -1,36 +1,38 @@
 namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+namespace cs = "http://purl.org/net/xbiblio/csl/2"
 
 start = style | templates
 # Style
-#
+# 
 # Note: Currently this is the only place that uses interleave.
 #       Could change it to an ordered list, and retain XSD compatability.
 #       OTOH, this is very incomplete; not sure if there are other places
 #       it would be useful.
-style = element style { info & templates? & citation? & bibliography? }
+style =
+  element cs:style { info & templates? & citation? & bibliography? }
 # Info
 
 # Info Metadata
 
 ## TODO
-info = element info { text }
+info = element cs:info { text }
 # data-types
 csl.token = xsd:NMTOKEN
 csl.token.list = xsd:NMTOKENS
 # Citation
-citation = element citation { render.model }
+citation = element cs:citation { render.model }
 # Bibliography
-bibliography = element bibliography { templates?, render.model }
+bibliography = element cs:bibliography { templates?, render.model }
 # Templates
 templates =
-  element templates {
+  element cs:templates {
     info?,
-    element template { render.model }+
+    element cs:template { render.model }+
   }
 render.model =
   (render.list | render.item | template.conditional)+, template.atts
 # Template
-template = element template { render.model }
+template = element cs:template { render.model }
 template.atts =
   attribute description { text }?,
   attribute context { text }?,
@@ -39,7 +41,7 @@ template.atts =
 # Render
 
 ## Describes the rendering for an individual reference item.`
-render.item = element reference { render.atts, render.fmt }
+render.item = element cs:reference { render.atts, render.fmt }
 render.atts =
   attribute variable { render.vars }
   | attribute str { text }
@@ -99,8 +101,8 @@ render.list =
 
 ## Conditional
 template.conditional =
-  element if { condition, render.model },
-  element if-then { condition, render.model }*,
-  element else { render.model }?
+  element cs:if { condition, render.model },
+  element cs:if-then { condition, render.model }*,
+  element cs:else { render.model }?
 # TODO
 condition = attribute mode { "narrative" | "default" }
