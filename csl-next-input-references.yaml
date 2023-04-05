@@ -124,6 +124,8 @@ definitions:
     - properties:
         family:
           title: Family name of contributor
+          # REVIEW 1. do we have a place for corporate names ATM?
+          #        2. why the below?
           description: Use family, not literal, for personal mononyms, e.g. 'Socrates', 'Lady Gaga'
           type: string
         given:

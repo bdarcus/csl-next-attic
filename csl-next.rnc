@@ -2,6 +2,11 @@ namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
 
 start = style | templates
 # Style
+#
+# Note: Currently this is the only place that uses interleave.
+#       Could change it to an ordered list, and retain XSD compatability.
+#       OTOH, this is very incomplete; not sure if there are other places
+#       it would be useful.
 style = element style { info & templates? & citation? & bibliography? }
 # Info
 
