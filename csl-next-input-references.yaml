@@ -77,6 +77,7 @@ definitions:
     description: A string that may include sub-string formatting for bold, italic,
       subscript, superscript, math, etc. The accompanying `csl-rich-text.yaml` schema
       defines experimental support for this in CSL JSON input.
+    # REVIEW: could we just say this should be 'djot'?
     type: string
   edtf-string:
     title: EDTF date string
