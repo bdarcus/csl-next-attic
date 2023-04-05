@@ -108,4 +108,4 @@ template.conditional =
   element cs:if-then { condition, render.model }*,
   element cs:else { render.model }?
 # TODO
-condition = cs:attribute mode { "narrative" | "default" }
+condition = attribute cs:mode { "narrative" | "default" }
