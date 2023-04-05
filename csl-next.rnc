@@ -34,33 +34,33 @@ render.model =
 # Template
 template = element cs:template { render.model }
 template.atts =
-  attribute description { text }?,
-  attribute context { text }?,
-  attribute name { text }?,
-  attribute example { text }?
+  attribute cs:description { text }?,
+  attribute cs:context { text }?,
+  attribute cs:name { text }?,
+  attribute cs:example { text }?
 # Render
 
 ## Describes the rendering for an individual reference item.`
 render.item = element cs:reference { render.atts, render.fmt }
 render.atts =
-  attribute variable { render.vars }
-  | attribute str { text }
-  | attribute term { text }
-  | attribute template { csl.token }
+  attribute cs:variable { render.vars }
+  | attribute cs:str { text }
+  | attribute cs:term { text }
+  | attribute cs:template { csl.token }
 render.vars =
   "author" | "editor" | "issued" | "title" | "cited-locators"
 render.fmt =
   
   ## a template to call for partial rendering
-  attribute template { text }?,
-  attribute bold { xsd:boolean }?,
-  attribute prefix { text }?,
-  attribute suffix { text }?,
+  attribute cs:template { text }?,
+  attribute cs:bold { xsd:boolean }?,
+  attribute cs:prefix { text }?,
+  attribute cs:suffix { text }?,
   
   ## an attribute whose value is a list of named csl.token operations that transform
   ## the input
-  attribute transforms { csl.token.list }?,
-  attribute substitute {
+  attribute cs:transforms { csl.token.list }?,
+  attribute cs:substitute {
     list { render.vars }
   }?
 
@@ -105,4 +105,4 @@ template.conditional =
   element cs:if-then { condition, render.model }*,
   element cs:else { render.model }?
 # TODO
-condition = attribute mode { "narrative" | "default" }
+condition = cs:attribute mode { "narrative" | "default" }
