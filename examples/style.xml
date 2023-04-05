@@ -26,7 +26,7 @@
     <cs:else>
       <!-- parenthetical author-date citation -->
       <cs:list cs:group-by="cs-author-year"
-               cs:prefix="(" suffix=")"
+               cs:prefix="(" cs:suffix=")"
                cs:delimiter="; ">
         <cs:reference cs:template="author-paren" cs:suffix=", "/>
         <cs:reference cs:variable="issued" cs:transforms="date.year"/>
