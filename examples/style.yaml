@@ -7,5 +7,5 @@ citation:
   group-by: cs-author-year
   sort: cs-author-year
   templates:
-    default: ${ "(" ${ cs-author-apa ", "} ${ cs_issued-year-apa } ")" }
-    narrative:  ${ cs-author-apa ", "} ${ "(" ${ cs_issued-year-apa } ")" }
+    default: {{ "(" {{ cs-author-apa ", "}} {{ cs_issued-year-apa }} ")" }}
+    narrative:  {{ cs-author-apa ", "}} {{ "(" cs_issued-year-apa ")" }}
