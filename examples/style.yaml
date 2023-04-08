@@ -1,11 +1,11 @@
 ---
 title: APA CSL style
 templates:
-  cs-author-apa: ( author | editor )>short
-  cs-issued-year-apa: issued>year>addsuffix
+  cs-author-apa: '{{v:author v:editor}}>short'
+  cs-issued-year-apa: '{{v:issued}}>cs-year>cs-addsuffix'
 citation:
   group-by: cs-author-year
   sort: cs-author-year
   templates:
-    default: {{ "(" {{ cs-author-apa ", "}} {{ cs_issued-year-apa }} ")" }}
-    narrative:  {{ cs-author-apa ", "}} {{ "(" cs_issued-year-apa ")" }}
+    default: '({{t:cs-author-apa}}, {{t:cs-issued-year-apa}}: {{t:cs-locators}})'
+    narrative: '{{t:cs-author-apa}} ({{t:cs-issued-year}}: {{t:cs-locators}})'
