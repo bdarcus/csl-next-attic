@@ -1,24 +1,34 @@
 ---
-# this was just an initial experiment, that may go nowhere
-title: APA
-id: apa
-disambiguation: abc
-citation:
-  mode: intext
-  et-al-min: 4
-  et-al-use-first: 1
-  disambiguate-add-year-suffix: true
-  disambiguate-add-names: true
-  disambiguate-add-givenname: true
-  givenname-disambiguation-rule: primary-name
-  collapse: year
-  after-collapse-delimiter: "; "
+title: CSL NEXT style schema
+description: a YAML/JSON representation of a new CSL style language.
+"$schema": http://json-schema.org/draft-07/schema#
+"$id": https://resource.citationstyles.org/schema/csl/style
+type: object
+definitions:
+  template:
+    type: string
+    description: A string using the CSL NEXT template language.
   templates:
-    - mode: default
-    # this template syntax (liquid) may not be enough, for example
-    # or much better than just sticking exclusively with XML
-      str: "({{ author.names }}, {{ date }}{{ year-suffix }})"
-    - mode: intext
-      str: "{{ author.names }} ({{ date }}{{year-suffix }})"
-
-
+    "$ref": "#/definitions/template"
+    type: array
+properties:
+  title:
+    type: string
+  templates:
+    "$ref": "#/definitions/templates"
+  citation:
+    type: object
+    properties:
+      group-by:
+        type: string
+      sort:
+        type: string
+      templates:
+        type: object
+        properties:
+          default:
+            type: string
+            "$ref": "#/definitions/template"
+          narrative:
+            type: string
+            "$ref": "#/definitions/template"

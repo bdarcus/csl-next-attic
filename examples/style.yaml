@@ -1,0 +1,11 @@
+---
+title: APA CSL style
+templates:
+  cs-author-apa: ( author | editor )>short
+  cs-issued-year-apa: issued>year>addsuffix
+citation:
+  group-by: cs-author-year
+  sort: cs-author-year
+  templates:
+    default: ${ "(" ${ cs-author-apa ", "} ${ cs_issued-year-apa } ")" }
+    narrative:  ${ cs-author-apa ", "} ${ "(" ${ cs_issued-year-apa } ")" }
