@@ -24,7 +24,7 @@ properties:
       sort:
         type: string
       templates:
-        type: object
+        type: array
         properties:
           default:
             type: string
