@@ -32,3 +32,11 @@ properties:
           narrative:
             type: string
             "$ref": "#/definitions/template"
+  bibliography:
+    type: object
+    group-by:
+      type: string
+      sort:
+        type: string
+    templates:
+      "$ref": "#/definitions/templates"

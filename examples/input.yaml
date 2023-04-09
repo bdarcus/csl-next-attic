@@ -18,7 +18,7 @@ citekey1:
     name: ABC Books
     location: New York
 citekey2:
-  author: Jones, Sam
+  author: ["Mehta, Jiten", "Kinnear, Eric"]
   issued: "2020"
   title: A chapter title
   container:
