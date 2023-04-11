@@ -1,45 +1,39 @@
+<?xml version="1.0"?>
 <cs:style xmlns:cs="http://purl.org/net/xbiblio/csl/2">
   <cs:info>test</cs:info>
   <cs:templates>
     <cs:template cs:name="apa-authors">
-      <cs:list cs:shorten-min="3"
-	             cs:shorten-use="1"
-	             cs:and-as="symbol">
-	      <cs:reference cs:variable="author"
-                      cs:transforms="names.initialize"/>
+      <cs:list cs:shorten-min="3" cs:shorten-use="1" cs:and-as="symbol">
+        <cs:item cs:variable="author" cs:transforms="names.initialize"/>
       </cs:list>
     </cs:template>
   </cs:templates>
   <cs:citation>
-    <!-- configure sort/group in templates -->
     <cs:cond>
       <cs:when cs:mode="narrative">
-        <cs:list cs:delimiter=", "
-	               cs:group-by="cs-author"
-                 cs:sort="cs-author">
-	        <cs:reference cs:template="apa-authors"/>
-	        <cs:list cs:prefix="(" cs:suffix=")">
-            <cs:reference cs:template="date-year"/>
-            <cs:reference cs:template="citation-locator"/>
-	        </cs:list>
+        <!-- all nodes are namespaced, and some key attribute values
+             pseudo-namespaced, to make extension easier -->
+        <cs:list cs:delimiter=", " cs:group-by="cs-author" cs:sort="cs-author">
+          <cs:item cs:template="apa-authors"/>
+          <cs:list cs:prefix="(" cs:suffix=")">
+            <cs:item cs:template="date-year"/>
+            <cs:item cs:template="citation-locator"/>
+          </cs:list>
         </cs:list>
       </cs:when>
       <cs:else>
         <!-- parenthetical author-date citation -->
-        <cs:list cs:group-by="cs-author-year"
-                 cs:prefix="(" cs:suffix=")"
-                 cs:delimiter="; ">
-          <cs:reference cs:template="author-paren" cs:suffix=", "/>
-          <cs:reference cs:variable="issued" cs:transforms="date.year"/>
-          <cs:reference cs:variable="issued" cs:transforms="date.year.suffix"/>
+        <cs:list cs:group-by="cs-author-year" cs:prefix="(" cs:suffix=")" cs:delimiter="; ">
+          <cs:item cs:template="author-paren" cs:suffix=", "/>
+          <cs:item cs:variable="issued" cs:transforms="date.year"/>
+          <cs:item cs:variable="issued" cs:transforms="date.year.suffix"/>
         </cs:list>
       </cs:else>
-      </cs:cond>>
+    </cs:cond>
   </cs:citation>
   <cs:bibliography>
-    <cs:list cs:sort="cs-author-year"
-             cs:group-by="cs-author-year">
-      <cs:reference cs:term="todo"/>
+    <cs:list cs:sort="cs-author-year" cs:group-by="cs-author-year">
+      <cs:item cs:term="todo"/>
     </cs:list>
   </cs:bibliography>
 </cs:style>

@@ -8,6 +8,10 @@ start = style | templates
 #       Could change it to an ordered list, and retain XSD compatability.
 #       OTOH, this is very incomplete; not sure if there are other places
 #       it would be useful.
+# 
+# The larger question: can we simplify the model enough, or rather avoid
+# compleixfiying it too much to fill out the features, that we don't even need
+# XML?
 style =
   element cs:style { info & templates? & citation? & bibliography? }
 # Info
@@ -41,7 +45,7 @@ template.atts =
 # Render
 
 ## Describes the rendering for an individual reference item.`
-render.item = element cs:reference { render.atts, render.fmt }
+render.item = element cs:item { render.atts, render.fmt }
 render.atts =
   attribute cs:variable { render.vars }
   | attribute cs:str { text }
@@ -107,7 +111,7 @@ render.list =
 template.conditional =
   # shamelessly borrowed from the lisp world, and XSLT 3.0
   element cs:cond {
-    element cs:when { condition, render.model }*,
+    element cs:when { condition, render.model }+,
     element cs:else { render.model }?
   }
 # TODO
