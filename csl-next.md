@@ -68,9 +68,9 @@ When a `list` is empty, it does not render.
 
 A `list` may include optional `group-by` or `sort` attributes, which configure grouping and sorting respectively.
 
-#### Reference
+#### Item
 
-A `reference` element places a variable or template string output in a sequence, and formats it with surrounding punctuation, fonts, etc.
+An`item` element places a reference variable or template string output in a sequence, and formats it with surrounding punctuation, fonts, etc.
 
 ### Rendering Attributes
 
@@ -132,18 +132,20 @@ The following example fragment shows:
 
 - the simplified and unified syntax/model
 - the `cs:mode` attribute, which does not exist in CSL currently, and would allow support for locally-modified citations
-- `cs:transforms` attribute
+- `cs:transforms` attribute TODO
 
 ```xml
-    <!-- configure sort/group in templates -->
-    <if mode="narrative">
-      <render-list delimiter=", "
-                   group-by="author" sort="author">
-        <render-item template="apa-authors"/>
-      <render-list prefix="(" suffix=")">
-        <render template="date-year"/>
-        <render template="citation-locator"/>
-       </render-list>
-    </render-list>
-    </if>
+  <cs:cond>
+    <cs:when cs:mode="cs-narrative">
+      <cs:list cs:delimiter=", "
+               cs:group-by="cs-author" 
+               cs:sort="cs-author">
+        <cs:item cs:template="apa-authors"/>
+        <cs:list cs:prefix="(" suffix=")">
+          <cs:item cs:template="date-year"/>
+          <cs:item cs:template="citation-locator"/>
+        </cs:list>
+      </cs:list>
+    </cs:when>
+  <cs:cond>
 ```
