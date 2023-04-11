@@ -7,32 +7,34 @@
 	             cs:and-as="symbol">
 	      <cs:reference cs:variable="author"
                       cs:transforms="names.initialize"/>
-        </cs:list>
+      </cs:list>
     </cs:template>
   </cs:templates>
   <cs:citation>
     <!-- configure sort/group in templates -->
-    <cs:if cs:mode="narrative">
-      <cs:list cs:delimiter=", "
-	             cs:group-by="cs-author"
-               cs:sort="cs-author">
-	      <cs:reference cs:template="apa-authors"/>
-	      <cs:list cs:prefix="(" cs:suffix=")">
-          <cs:reference cs:template="date-year"/>
-          <cs:reference cs:template="citation-locator"/>
-	      </cs:list>
-      </cs:list>
-    </cs:if>
-    <cs:else>
-      <!-- parenthetical author-date citation -->
-      <cs:list cs:group-by="cs-author-year"
-               cs:prefix="(" cs:suffix=")"
-               cs:delimiter="; ">
-        <cs:reference cs:template="author-paren" cs:suffix=", "/>
-        <cs:reference cs:variable="issued" cs:transforms="date.year"/>
-        <cs:reference cs:variable="issued" cs:transforms="date.year.suffix"/>
-      </cs:list>
-    </cs:else>
+    <cs:cond>
+      <cs:when cs:mode="narrative">
+        <cs:list cs:delimiter=", "
+	               cs:group-by="cs-author"
+                 cs:sort="cs-author">
+	        <cs:reference cs:template="apa-authors"/>
+	        <cs:list cs:prefix="(" cs:suffix=")">
+            <cs:reference cs:template="date-year"/>
+            <cs:reference cs:template="citation-locator"/>
+	        </cs:list>
+        </cs:list>
+      </cs:when>
+      <cs:else>
+        <!-- parenthetical author-date citation -->
+        <cs:list cs:group-by="cs-author-year"
+                 cs:prefix="(" cs:suffix=")"
+                 cs:delimiter="; ">
+          <cs:reference cs:template="author-paren" cs:suffix=", "/>
+          <cs:reference cs:variable="issued" cs:transforms="date.year"/>
+          <cs:reference cs:variable="issued" cs:transforms="date.year.suffix"/>
+        </cs:list>
+      </cs:else>
+      </cs:cond>>
   </cs:citation>
   <cs:bibliography>
     <cs:list cs:sort="cs-author-year"

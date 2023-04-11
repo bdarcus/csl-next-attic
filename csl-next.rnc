@@ -105,8 +105,14 @@ render.list =
 
 ## Conditional
 template.conditional =
-  element cs:if { condition, render.model },
-  element cs:if-then { condition, render.model }*,
-  element cs:else { render.model }?
+  # shamelessly borrowed from the lisp world, and XSLT 3.0
+  element cs:cond {
+    element cs:when { condition, render.model }*,
+    element cs:else { render.model }?
+  }
 # TODO
-condition = attribute cs:mode { "narrative" | "default" }
+condition =
+  attribute cs:mode { "narrative" | "default" }?,
+  attribute cs:type { text }?,
+  attribute cs:is-number { xsd:boolean }?,
+  attribute cs:match { "all" | "any" | "none" }?
