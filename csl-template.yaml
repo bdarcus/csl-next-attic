@@ -24,15 +24,11 @@ definitions:
     items:
       "$ref": "#/definitions/cs-token"
 properties:
-  template:
-    type: object
-    description: A CSL NEXT template.
-    properties:
-      name:
-        type: string
-      children:
-        type: array
-        anyOf:
-          - "$ref": "#/definitions/item"
-          - "$ref": "#/definitions/list"
-          - "$ref": "#/definitions/cond"
+  name:
+    type: string
+  children:
+    type: array
+    anyOf:
+      - "$ref": "#/definitions/item"
+      - "$ref": "#/definitions/list"
+      - "$ref": "#/definitions/cond"
