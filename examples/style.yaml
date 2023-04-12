@@ -1,19 +1,53 @@
----
-title: APA CSL style
-templates:
-  cs-author-apa:
-    - vars: ["author", "editor"]
-      transforms: ["cs-shorten-apa", "cs-et-al"]
-  cs-issued-year-apa:
-    - vars: ["issued"]
-      transforms: ["cs-year", "cs-addsuffix"]
-citation:
-  group-by: cs-author-year
-  sort: cs-author-year
++p_xml: version="1.0"
+# yq --xml-attribute-prefix "" --xml-keep-namespace=false  -p=xml '.' examples/style.xml
+style:
+  cs: http://purl.org/net/xbiblio/csl/2
+  info: test
   templates:
-    - default:
-    - narrative:
-        - template: cs-author-apa
-        - template: cs-issued-year-apa
+    template:
+      name: apa-authors
+      list:
+        shorten-min: "3"
+        shorten-use: "1"
+        and-as: symbol
+        item:
+          variable: author
+          transforms: names.initialize
+  citation:
+    cond:
+      when:
+        # all nodes are namespaced, and some key attribute values
+        #             pseudo-namespaced, to make extension easier
+        mode: narrative
+        list:
+          delimiter: ', '
+          group-by: cs-author
+          sort: cs-author
+          item:
+            template: apa-authors
+          list:
+            prefix: (
+            suffix: )
+            item:
+              - template: date-year
+              - template: citation-locator
+      else:
+        # parenthetical author-date citation
+        list:
+          group-by: cs-author-year
           prefix: (
           suffix: )
+          delimiter: '; '
+          item:
+            - template: author-paren
+              suffix: ', '
+            - variable: issued
+              transforms: date.year
+            - variable: issued
+              transforms: date.year.suffix
+  bibliography:
+    list:
+      sort: cs-author-year
+      group-by: cs-author-year
+      item:
+        term: todo
