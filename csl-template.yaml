@@ -6,17 +6,37 @@ description: a YAML/JSON representation of a new CSL style template language.
 type: object
 definitions:
   item:
+    description: Instructions for formatting item metadata.
     type: object
   list:
-    description: Formmatting instructions for a list of reference items.
+    description: Instructions for sequencing and formatting a list of reference items.
     type: array
   cond:
     description: Conditional formatting.
     type: array
+    # TODO
     properties:
+      anyOf:
+        - when:
+            type: string
+        - else:
+            type: string
   cs-token:
     # must be a token
+    description: Controlled lists of tokens, that correspond to different functions.
+    # a pattern here would require a pseudo-namespace as below, but allow custom ones
     type: string
+    enum:
+      - cs-author
+      - cs-author-year
+  cs-token.transforms:
+    type: string
+    enum:
+      - cs-title.main
+      - cs-title.sub
+      - cs-date.year
+      - cs-contributors.etal
+      - cs-locators.range
   group-by:
     description: Grouping instructions for a list.
     "$ref": "#/definitions/cs-token"
@@ -24,12 +44,13 @@ definitions:
     description: Sorting instructions for a list.
     "$ref": "#/definitions/cs-token"
   transforms:
-    description: Functions to transform input data.
+    description: Functions to transform item input data.
     type: array
     items:
-      "$ref": "#/definitions/cs-token"
+      "$ref": "#/definitions/cs-token.transforms"
 properties:
   name:
+    # token
     type: string
   children:
     type: array
