@@ -8,18 +8,23 @@ definitions:
   item:
     type: object
   list:
+    description: Formmatting instructions for a list of reference items.
     type: array
   cond:
+    description: Conditional formatting.
     type: array
     properties:
   cs-token:
     # must be a token
     type: string
   group-by:
+    description: Grouping instructions for a list.
     "$ref": "#/definitions/cs-token"
   sort:
+    description: Sorting instructions for a list.
     "$ref": "#/definitions/cs-token"
   transforms:
+    description: Functions to transform input data.
     type: array
     items:
       "$ref": "#/definitions/cs-token"
