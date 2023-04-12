@@ -14,12 +14,41 @@ definitions:
   cond:
     description: Conditional formatting.
     type: array
+    # TODO
     items:
       anyOf:
       # TODO tighten
         - "$ref": "#/definitions/when"
         - "$ref": "#/definitions/else"
+  variables:
+    type: string
+    enum:
+      - author
+      - editor
+      - title
+      - issued
+      - publisher
+      - volume
+      - issue
+  reftypes:
+    type: string
+    enum:
+      - book
+      - article
+      - chapter
+  match:
+    type: string
+    enum:
+      - any
+      - all
+      - none
   when:
+    variable:
+      "$ref": "#/definitions/variables"
+    reftype:
+      "$ref": "#/definitions/reftypes"
+    match:
+      "$ref": "#/definitions/match"
     children:
       type: array
       items:
@@ -36,6 +65,7 @@ definitions:
     type: string
     enum:
       - cs-author
+      - cs-year
       - cs-author-year
   cs-token.transforms:
     type: string
