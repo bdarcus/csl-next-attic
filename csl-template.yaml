@@ -48,13 +48,16 @@ definitions:
     type: array
     items:
       "$ref": "#/definitions/cs-token.transforms"
+  template.model:
+    anyOf:
+      - "$ref": "#/definitions/item"
+      - "$ref": "#/definitions/list"
+      - "$ref": "#/definitions/cond"
 properties:
   name:
     # token
     type: string
   children:
+    items:
+      "$ref": "#/definitions/template.model"
     type: array
-    anyOf:
-      - "$ref": "#/definitions/item"
-      - "$ref": "#/definitions/list"
-      - "$ref": "#/definitions/cond"
