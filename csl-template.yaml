@@ -14,13 +14,19 @@ definitions:
   cond:
     description: Conditional formatting.
     type: array
-    # TODO
-    properties:
+    items:
       anyOf:
-        - when:
-            type: string
-        - else:
-            type: string
+      # TODO tighten
+        - "$ref": "#/definitions/when"
+        - "$ref": "#/definitions/else"
+  when:
+    children:
+      items:
+        "$ref": "#/definitions/template.model"
+  else:
+    children:
+      items:
+        "$ref": "#/definitions/template.model"
   cs-token:
     # must be a token
     description: Controlled lists of tokens, that correspond to different functions.
