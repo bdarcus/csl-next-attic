@@ -21,10 +21,12 @@ definitions:
         - "$ref": "#/definitions/else"
   when:
     children:
+      type: array
       items:
         "$ref": "#/definitions/template.model"
   else:
     children:
+      type: array
       items:
         "$ref": "#/definitions/template.model"
   cs-token:
