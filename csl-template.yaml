@@ -11,6 +11,8 @@ definitions:
   list:
     description: Instructions for sequencing and formatting a list of reference items.
     type: array
+    items:
+      "$ref": "#/definitions/template.model
   cond:
     description: Conditional formatting.
     type: array
