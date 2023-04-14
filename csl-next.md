@@ -50,11 +50,11 @@ A template is an optionally-named description of how to map CSL input data varia
 
 A collection of templates can be contained:
 
-- at the top-level, for use across citation and bibliography
-- in citation and/or bibliography
+- at the top-level, for use across `citation` and `bibliography`
+- in `citation` and/or `bibliography`
 - in a standalone file
 
-The CSL project provides a collection of template files for use in styles in **URL to DIR**. 
+The CSL project provides a collection of template files for use in styles in TBD. 
 The CSL-hosted style files in turn incorporate these templates.
 
 ### Rendering Elements
