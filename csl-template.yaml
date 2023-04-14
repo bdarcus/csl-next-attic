@@ -23,6 +23,7 @@ definitions:
         - "$ref": "#/definitions/when"
         - "$ref": "#/definitions/else"
   variables:
+    description: Item metadata variables.
     type: string
     enum:
       - author
@@ -33,18 +34,21 @@ definitions:
       - volume
       - issue
   reftypes:
+    description: Item metadata types.
     type: string
     enum:
       - book
       - article
       - chapter
   match:
+    description: Conditional matching rule.
     type: string
     enum:
       - any
       - all
       - none
   when:
+    description: A condition; when met, children are processed.
     variable:
       "$ref": "#/definitions/variables"
     reftype:
@@ -56,6 +60,7 @@ definitions:
       items:
         "$ref": "#/definitions/template.model"
   else:
+    description: When any `when` conditions are nil, the fallback.
     children:
       type: array
       items:
@@ -70,6 +75,7 @@ definitions:
       - cs-year
       - cs-author-year
   cs-token.transforms:
+    description: Controlled list of tokens, that correspond to data manipulation functions.
     type: string
     enum:
       - cs-title.main
@@ -95,6 +101,7 @@ definitions:
       - "$ref": "#/definitions/cond"
 properties:
   name:
+    description: The token by which a template may be referenced.
     # token
     type: string
   children:
