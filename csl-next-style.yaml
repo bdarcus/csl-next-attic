@@ -1,0 +1,69 @@
+$schema: http://json-schema.org/draft-07/schema#
+definitions:
+  CategoryOpts:
+    enum:
+      - biology
+      - science
+      - social science
+    type: string
+  GroupSortOpts:
+    enum:
+      - cs-author
+      - cs-author-year
+      - cs-year
+    type: string
+  RefList:
+    properties:
+      groupby:
+        $ref: '#/definitions/GroupSortOpts'
+        description: How to group the list of reference items in a citation or bibliography.
+      inline:
+        type: boolean
+      prefix:
+        type: string
+      sort:
+        $ref: '#/definitions/GroupSortOpts'
+        description: How to sort the reference items in citation or bibliography.
+      suffix:
+        type: string
+      templates:
+        items:
+          $ref: '#/definitions/Template'
+        type: array
+    type: object
+  Template:
+    properties:
+      children:
+        description: The rendering instructions.
+        items:
+          minimum: 1
+          type: RefItem
+        type: array
+      name:
+        description: The name token for the template, for reference from other templates.
+        type: string
+    type: object
+properties:
+  bibliography:
+    $ref: '#/definitions/RefList'
+    description: The bibliography specification.
+  categories:
+    description: The categories the style belongs to; for purposes of indexing.
+    items:
+      $ref: '#/definitions/CategoryOpts'
+    type: array
+  citation:
+    $ref: '#/definitions/RefList'
+    description: The citation specification.
+  description:
+    description: The description of the style.
+    type: string
+  templates:
+    description: Template definitions, for use elsewhere in the style.
+    items:
+      $ref: '#/definitions/Template'
+    type: array
+  title:
+    description: The human-readable name of the style.
+    type: string
+type: object
